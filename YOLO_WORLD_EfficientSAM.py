@@ -14,7 +14,7 @@ from .utils.video import generate_file_name, calculate_end_frame_index, create_d
 current_directory = os.path.dirname(os.path.abspath(__file__))
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-BOUNDING_BOX_ANNOTATOR = sv.BoundingBoxAnnotator()
+BOUNDING_BOX_ANNOTATOR = sv.BoxAnnotator()
 MASK_ANNOTATOR = sv.MaskAnnotator()
 LABEL_ANNOTATOR = sv.LabelAnnotator()
 
@@ -41,7 +41,7 @@ def annotate_image(
         for class_id, confidence in
         zip(detections.class_id, detections.confidence)
     ]
-    BOUNDING_BOX_ANNOTATOR = sv.BoundingBoxAnnotator(thickness=thickness)
+    BOUNDING_BOX_ANNOTATOR = sv.BoxAnnotator(thickness=thickness)
     LABEL_ANNOTATOR = sv.LabelAnnotator(text_thickness=text_thickness, text_scale=text_scale)
     output_image = MASK_ANNOTATOR.annotate(input_image, detections)
     output_image = BOUNDING_BOX_ANNOTATOR.annotate(output_image, detections)
